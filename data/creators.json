@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": "yapimaru",
+    "name": "やぴまる",
+    "kana": "YAPIMARU",
+    "avatar": "https://yt3.googleusercontent.com/fM6STSgbzch5qAiDsYNYomfcqS15jWcitSm44vmRPMHIn6JkdhZ0m5XRkpH_k6zO3UnBTZ3E=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#000000",
+    "color2": "#ffffff",
+    "message": "",
+    "tags": [
+      "スーパークリエイター",
+      "日本一"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "url": "https://www.youtube.com/@YAPIMARU/featured",
+        "handle": "@YAPIMARU",
+        "count": "350000",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "url": "https://x.com/YAPIMARU_GAMES",
+        "handle": "@YAPIMARU_GAMES",
+        "count": "142000",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UC8GfRiGRbm8TSngm-zI3baA",
+    "twitterHandle": "YAPIMARU_GAMES",
+    "joinedDate": "2017-06"
+  }
+]
