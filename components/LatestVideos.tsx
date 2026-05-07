@@ -7,21 +7,46 @@ interface Props {
   color: string;
 }
 
-export default async function LatestVideos({ channelId, channelUrl, color }: Props) {
+export default async function LatestVideos({ channelId, channelUrl }: Props) {
   const videos = await getLatestYouTubeVideos(channelId, 3);
 
   if (videos.length === 0) {
     return (
-      <div className="text-center py-10">
-        <p className="text-3xl mb-2">▶</p>
-        <p className="text-sm" style={{ color: "#64748B" }}>
-          YouTubeのチャンネルIDを設定すると最新動画が表示されます
+      <div
+        style={{
+          background: "linear-gradient(180deg, #1E2A4A 0%, #16213E 100%)",
+          border: "2px dashed #2A3A5A",
+          borderRadius: 16,
+          padding: "48px 24px",
+          textAlign: "center",
+        }}
+      >
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: "50%",
+            background: "rgba(255,0,0,0.12)",
+            border: "2px solid rgba(255,0,0,0.2)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0 auto 16px",
+            fontSize: 22,
+            color: "#FF4444",
+          }}
+        >
+          ▶
+        </div>
+        <p style={{ color: "#606080", fontSize: 13, marginBottom: 12 }}>
+          チャンネルIDを設定すると最新動画が表示されます
         </p>
         <a
           href={channelUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block mt-3 text-sm font-bold text-red-500 hover:text-red-600 underline underline-offset-2"
+          className="btn-secondary"
+          style={{ fontSize: 12 }}
         >
           YouTubeチャンネルへ →
         </a>
@@ -40,7 +65,7 @@ export default async function LatestVideos({ channelId, channelUrl, color }: Pro
             rel="noopener noreferrer"
             className="video-card block"
           >
-            <div className="relative aspect-video bg-gray-100">
+            <div className="relative aspect-video" style={{ background: "#0D0D1A" }}>
               <Image
                 src={v.thumbnail}
                 alt={v.title}
@@ -48,20 +73,31 @@ export default async function LatestVideos({ channelId, channelUrl, color }: Pro
                 className="object-cover"
                 sizes="(max-width: 640px) 100vw, 33vw"
               />
-              <div className="play-overlay absolute inset-0 flex items-center justify-center bg-black/30">
-                <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white text-lg ml-0.5">▶</span>
+              <div className="play-overlay absolute inset-0 flex items-center justify-center bg-black/40">
+                <div
+                  style={{
+                    width: 44,
+                    height: 44,
+                    background: "#FF0000",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: "0 0 20px rgba(255,0,0,0.5)",
+                  }}
+                >
+                  <span style={{ color: "#fff", fontSize: 16, marginLeft: 2 }}>▶</span>
                 </div>
               </div>
             </div>
             <div className="p-3">
               <p
-                className="text-sm font-semibold line-clamp-2 leading-snug"
-                style={{ color: "#1E1B2E" }}
+                className="text-sm line-clamp-2 leading-snug"
+                style={{ color: "#FFFFFF", fontFamily: "'Noto Sans JP', sans-serif", fontWeight: 700 }}
               >
                 {v.title}
               </p>
-              <p className="text-xs mt-1" style={{ color: "#94A3B8" }}>{v.published}</p>
+              <p className="text-xs mt-1" style={{ color: "#606080" }}>{v.published}</p>
             </div>
           </a>
         ))}
@@ -72,13 +108,8 @@ export default async function LatestVideos({ channelId, channelUrl, color }: Pro
           href={channelUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all hover:scale-105"
-          style={{
-            background: "rgba(255,0,0,0.07)",
-            color: "#CC0000",
-            border: "1.5px solid rgba(255,0,0,0.2)",
-            fontFamily: "'Lilita One', sans-serif",
-          }}
+          className="btn-secondary"
+          style={{ fontSize: 13 }}
         >
           ▶ YouTubeチャンネルを見る
         </a>

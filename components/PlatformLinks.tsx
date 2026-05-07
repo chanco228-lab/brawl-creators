@@ -6,10 +6,10 @@ interface Props {
 }
 
 const PLATFORM_LABELS: Record<string, string> = {
-  youtube: "YouTube",
-  twitter: "X (Twitter)",
-  tiktok: "TikTok",
-  twitch: "Twitch",
+  youtube:   "YouTube",
+  twitter:   "X (Twitter)",
+  tiktok:    "TikTok",
+  twitch:    "Twitch",
   instagram: "Instagram",
 };
 
@@ -30,8 +30,8 @@ export default function PlatformLinks({ creator }: Props) {
             <div
               className="w-11 h-11 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
               style={{
-                background: `${config.color}12`,
-                border: `1.5px solid ${config.color}25`,
+                background: config.bg,
+                border: `1.5px solid ${config.color}40`,
                 color: config.color,
               }}
             >
@@ -40,12 +40,12 @@ export default function PlatformLinks({ creator }: Props) {
 
             {/* ラベル + ハンドル */}
             <div className="flex-1 min-w-0">
-              <p className="text-xs" style={{ color: "#94A3B8" }}>
+              <p className="text-xs" style={{ color: "#606080" }}>
                 {PLATFORM_LABELS[p.name]}
               </p>
               <p
                 className="text-sm truncate"
-                style={{ color: "#1E1B2E", fontFamily: "'Lilita One', sans-serif" }}
+                style={{ color: "#FFFFFF", fontFamily: "'Lilita One', sans-serif" }}
               >
                 {p.handle}
               </p>
@@ -56,13 +56,13 @@ export default function PlatformLinks({ creator }: Props) {
               <p
                 className="text-xl"
                 style={{
-                  fontFamily: "'Fredoka One', cursive",
-                  color: config.color,
+                  fontFamily: "'Lilita One', sans-serif",
+                  color: "#FFB921",
                 }}
               >
                 {p.count}
               </p>
-              <p className="text-xs" style={{ color: "#94A3B8" }}>{p.label}</p>
+              <p className="text-xs" style={{ color: "#606080" }}>{p.label}</p>
             </div>
           </a>
         );

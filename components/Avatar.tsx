@@ -1,6 +1,6 @@
 interface Props {
-  avatar: string;     // 絵文字 or 画像URL (http...)
-  size: number;       // px
+  avatar: string;
+  size: number;
   color1: string;
   color2: string;
   className?: string;
@@ -14,14 +14,25 @@ export default function Avatar({ avatar, size, color1, color2, className = "" }:
     height: size,
     borderRadius: "16px",
     flexShrink: 0,
-    background: `linear-gradient(135deg, ${color1}25, ${color2}18)`,
-    border: `2px solid ${color1}40`,
-    boxShadow: `0 4px 16px ${color1}25`,
+    background: `linear-gradient(135deg, ${color1}40, ${color2}30)`,
+    border: "3px solid #FFB921",
+    boxShadow: "0 0 14px rgba(255,185,33,0.3), 0 4px 16px rgba(0,0,0,0.4)",
     overflow: "hidden",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   };
+
+  // 画像なし・絵文字なし → イニシャルアイコン
+  const isEmpty = !avatar || avatar.trim() === "";
+
+  if (isEmpty) {
+    return (
+      <div style={{ ...baseStyle, fontSize: size * 0.4, color: "#000", fontFamily: "'Lilita One', sans-serif" }} className={className}>
+        ?
+      </div>
+    );
+  }
 
   if (isImage) {
     return (
@@ -37,10 +48,7 @@ export default function Avatar({ avatar, size, color1, color2, className = "" }:
   }
 
   return (
-    <div
-      style={{ ...baseStyle, fontSize: size * 0.45 }}
-      className={className}
-    >
+    <div style={{ ...baseStyle, fontSize: size * 0.45 }} className={className}>
       {avatar}
     </div>
   );

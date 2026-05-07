@@ -16,46 +16,43 @@ export default function CreatorCard({ creator, index }: Props) {
     <Link href={`/creators/${creator.id}`} className="block">
       <div className={`creator-card ${delayClass}`}>
 
-        {/* Creator color top strip */}
+        {/* top strip */}
         <div
           className="h-1.5"
-          style={{ background: `linear-gradient(90deg, ${creator.color1}, ${creator.color2})` }}
+          style={{ background: "linear-gradient(90deg, #FFB921, #FF6B35, #F01919)" }}
         />
 
         <div className="p-5">
-          {/* ── アイコン（アバター）の隣に名前 ── */}
+          {/* アバター + 名前 */}
           <div className="flex items-center gap-4 mb-4">
-
-            {/* Avatar */}
             <Avatar
               avatar={creator.avatar}
               size={64}
               color1={creator.color1}
               color2={creator.color2}
             />
-
-            {/* 名前 */}
             <div className="min-w-0">
               <h2
                 className="text-xl leading-tight truncate"
                 style={{
-                  fontFamily: "'Fredoka One', cursive",
-                  color: "#1E1B2E",
+                  fontFamily: "'Lilita One', sans-serif",
+                  color: "#FFB921",
+                  WebkitTextStroke: "1px #000",
+                  textShadow: "1px 1px 0 #000",
                 }}
               >
                 {creator.name}
               </h2>
               <p
                 className="text-xs mt-0.5"
-                style={{ fontFamily: "'Lilita One', sans-serif", color: "#94A3B8" }}
+                style={{ fontFamily: "'Lilita One', sans-serif", color: "#606080" }}
               >
                 {creator.kana}
               </p>
-              {/* YouTube count */}
               {youtubeInfo && (
                 <p
-                  className="text-xs font-bold mt-0.5"
-                  style={{ color: creator.color1, fontFamily: "'Lilita One', sans-serif" }}
+                  className="text-xs mt-0.5"
+                  style={{ color: "#F01919", fontFamily: "'Lilita One', sans-serif" }}
                 >
                   ▶ YouTube {youtubeInfo.count} {youtubeInfo.label}
                 </p>
@@ -73,7 +70,7 @@ export default function CreatorCard({ creator, index }: Props) {
           {/* Message */}
           <p
             className="text-sm leading-relaxed line-clamp-2 mb-4"
-            style={{ color: "#64748B" }}
+            style={{ color: "#A0A0C0" }}
           >
             {creator.message}
           </p>
@@ -82,10 +79,10 @@ export default function CreatorCard({ creator, index }: Props) {
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
               {creator.platforms.map((p) => (
-                <PlatformIcon key={p.name} platform={p.name} size={28} />
+                <PlatformIcon key={p.name} platform={p.name} size={30} />
               ))}
             </div>
-            <span className="btn-primary text-xs">
+            <span className="btn-primary" style={{ fontSize: 12 }}>
               詳しく見る →
             </span>
           </div>
