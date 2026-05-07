@@ -26,16 +26,9 @@ export const creators: Creator[] = [
         count: "14.2万",
         label: "フォロワー",
       },
-      {
-        name: "tiktok",
-        url: "https://tiktok.com/@example_starbros",
-        handle: "@StarBros",
-        count: "15万",
-        label: "フォロワー",
-      },
     ],
-    youtubeChannelId: "",
-    twitterHandle: "StarBros_BS",
+    youtubeChannelId: "UC8GfRiGRbm8TSngm-zI3baA",
+    twitterHandle: "YAPIMARU_GAMES",
     joinedDate: "2023-04",
   },
   {
