@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Creator } from "@/types/creator";
 import PlatformIcon from "@/components/PlatformIcon";
+import Avatar from "@/components/Avatar";
 
 interface Props {
   creator: Creator;
@@ -25,17 +26,13 @@ export default function CreatorCard({ creator, index }: Props) {
           {/* ── アイコン（アバター）の隣に名前 ── */}
           <div className="flex items-center gap-4 mb-4">
 
-            {/* Avatar circle */}
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0"
-              style={{
-                background: `linear-gradient(135deg, ${creator.color1}25, ${creator.color2}18)`,
-                border: `2px solid ${creator.color1}40`,
-                boxShadow: `0 4px 16px ${creator.color1}25`,
-              }}
-            >
-              {creator.avatar}
-            </div>
+            {/* Avatar */}
+            <Avatar
+              avatar={creator.avatar}
+              size={64}
+              color1={creator.color1}
+              color2={creator.color2}
+            />
 
             {/* 名前 */}
             <div className="min-w-0">

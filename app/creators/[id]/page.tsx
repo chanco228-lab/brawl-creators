@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCreatorById, creators } from "@/data/creators";
+import Avatar from "@/components/Avatar";
 import PlatformLinks from "@/components/PlatformLinks";
 import LatestVideos from "@/components/LatestVideos";
 import TwitterTimeline from "@/components/TwitterTimeline";
@@ -55,16 +56,13 @@ export default async function CreatorPage({ params }: Props) {
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
 
               {/* アバター */}
-              <div
-                className="w-28 h-28 rounded-3xl flex items-center justify-center text-5xl flex-shrink-0 float-anim"
-                style={{
-                  background: `linear-gradient(135deg, ${creator.color1}30, ${creator.color2}20)`,
-                  border: `3px solid ${creator.color1}35`,
-                  boxShadow: `0 8px 32px ${creator.color1}25`,
-                }}
-              >
-                {creator.avatar}
-              </div>
+              <Avatar
+                avatar={creator.avatar}
+                size={112}
+                color1={creator.color1}
+                color2={creator.color2}
+                className="float-anim"
+              />
 
               {/* 名前など */}
               <div className="text-center sm:text-left flex-1">

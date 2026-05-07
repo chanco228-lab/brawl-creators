@@ -2,28 +2,28 @@ import type { Creator } from "@/types/creator";
 
 export const creators: Creator[] = [
   {
-    id: "starbros",
-    name: "スターブロス",
-    kana: "StarBros",
+    id: "yapimaru",
+    name: "やぴまる",
+    kana: "YAPIMARU",
     avatar: "⭐",
     color1: "#7c3aed",
     color2: "#4f46e5",
     message:
-      "毎日ブロスタ攻略動画をアップ中！ランク戦からイベントまで幅広くカバーします。一緒に最強を目指そう！",
+      "明るい笑顔とユーモアで人を繋ぐストリーマー。初心者からベテランまで誰もが楽しめる企画やイベントを主催し、コミュニティを盛り上げる",
     tags: ["攻略", "ランク戦", "解説"],
     platforms: [
       {
         name: "youtube",
-        url: "https://www.youtube.com/@example_starbros",
-        handle: "@StarBros",
-        count: "25.3万",
+        url: "https://www.youtube.com/@YAPIMARU",
+        handle: "@YAPIMARU",
+        count: "35万",
         label: "登録者",
       },
       {
         name: "twitter",
-        url: "https://x.com/example_starbros",
-        handle: "@StarBros_BS",
-        count: "8.2万",
+        url: "https://x.com/YAPIMARU_GAMES",
+        handle: "@YAPIMARU_GAMES",
+        count: "14.2万",
         label: "フォロワー",
       },
       {
