@@ -30,5 +30,101 @@
     "youtubeChannelId": "UC8GfRiGRbm8TSngm-zI3baA",
     "twitterHandle": "YAPIMARU_GAMES",
     "joinedDate": "2017-06"
+  },
+  {
+    "id": "garikim",
+    "name": "ガリキム",
+    "kana": "GARIKIM",
+    "avatar": "https://yt3.googleusercontent.com/qN96MtyGidephyYxQmGaLLeRBD7Bp6mQwvA3i8UjKVWCaRG12gFSvcs0NyG1tIPt3J38u231Cg=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#7c3aed",
+    "color2": "#4f46e5",
+    "message": "",
+    "tags": [
+      "最新情報",
+      "公認クリエイター"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@GARIKIM-BS",
+        "url": "https://www.youtube.com/@GARIKIM-BS",
+        "count": "12000",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@GARIKIMU_brawl",
+        "url": "https://x.com/GARIKIMU_brawl",
+        "count": "23455",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UCL46nCMl87Uo1RJ_esfC5cQ",
+    "twitterHandle": "GARIKIMU_brawl",
+    "joinedDate": "2025-01"
+  },
+  {
+    "id": "gan",
+    "name": "がん",
+    "kana": "Gan",
+    "avatar": "https://yt3.googleusercontent.com/ytc/AIdro_mNw1QcTzTaPobDvsxZtjDWctWXwruH_nHxm-OOQHZIGt4=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#7c3aed",
+    "color2": "#4f46e5",
+    "message": "",
+    "tags": [
+      "スーパークリエイター",
+      "プロランク"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "url": "https://www.youtube.com/@gan8728",
+        "handle": "@gan8728",
+        "count": "162000",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "url": "https://x.com/Gan_tonanoru",
+        "handle": "@Gan_tonanoru",
+        "count": "84600",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UC6z6qwz1Mq3E5h35gj7cKjw",
+    "twitterHandle": "Gan_tonanoru",
+    "joinedDate": "2018-04"
+  },
+  {
+    "id": "tensai",
+    "name": "てんさい",
+    "kana": "Tensai",
+    "avatar": "https://pbs.twimg.com/profile_images/1745127637545332739/7GDidhWJ_400x400.jpg",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "世界大会優勝",
+      "Crazy Raccoon"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@tensaibs",
+        "url": "https://www.youtube.com/@tensaibs",
+        "count": "137000",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@tensaibs",
+        "url": "https://x.com/tensaibs",
+        "count": "127800",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UCnmYa44iASA4G4J4Ots8Lng",
+    "twitterHandle": "tensaibs",
+    "joinedDate": "2018-08"
   }
 ]
