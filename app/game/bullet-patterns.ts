@@ -65,12 +65,12 @@ export function getInterval(elapsed: number): number {
 }
 
 export function getCount(elapsed: number): number {
-  if (elapsed < 5)  return 2;
-  if (elapsed < 15) return Math.random() < 0.5 ? 2 : 3;
-  if (elapsed < 25) return 3;
-  if (elapsed < 40) return Math.random() < 0.5 ? 3 : 4;
-  if (elapsed < 60) return Math.random() < 0.5 ? 4 : 5;
-  return Math.random() < 0.5 ? 5 : 6;
+  if (elapsed < 5)  return 3;
+  if (elapsed < 15) return 3;
+  if (elapsed < 25) return Math.random() < 0.5 ? 3 : 4;
+  if (elapsed < 40) return 4;
+  if (elapsed < 60) return 4;
+  return Math.random() < 0.5 ? 4 : 5;
 }
 
 export type PatternName = "aim" | "spread" | "wave" | "cross";

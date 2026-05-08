@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { PLAYER, DIFFICULTY, COLORS } from "./constants";
+import { PLAYER, BULLET, DIFFICULTY, COLORS } from "./constants";
 import { drawField, drawPlayer, drawBullet, drawParticles, drawHUD } from "./renderer";
 import {
   BulletObj, Particle,
@@ -217,43 +217,45 @@ export default function GameCanvas() {
         // Still in slow-mo — continue rendering with reduced timeScale
       }
 
-      // ── Player movement (acceleration model) ─────────────────────────
-      let inputX = 0, inputY = 0;
-      if (keys["ArrowLeft"]  || keys["a"] || keys["A"]) inputX -= 1;
-      if (keys["ArrowRight"] || keys["d"] || keys["D"]) inputX += 1;
-      if (keys["ArrowUp"]    || keys["w"] || keys["W"]) inputY -= 1;
-      if (keys["ArrowDown"]  || keys["s"] || keys["S"]) inputY += 1;
-
-      // Normalize diagonal keyboard input
-      if (inputX !== 0 && inputY !== 0) {
-        const len = Math.sqrt(2);
-        inputX /= len;
-        inputY /= len;
-      }
-
-      // Joystick overrides keyboard if active
+      // ── Player movement ───────────────────────────────────────────────
       const joy = joystickInputRef.current;
-      if (joy.x !== 0 || joy.y !== 0) {
-        inputX = joy.x;
-        inputY = joy.y;
-      }
+      const hasJoystick = joy.x !== 0 || joy.y !== 0;
 
-      if (inputX !== 0 || inputY !== 0) {
-        p.vx += inputX * PLAYER.ACCEL * ts;
-        p.vy += inputY * PLAYER.ACCEL * ts;
+      if (hasJoystick) {
+        // Joystick → direct velocity (instantly responsive, like Brawl Stars)
+        p.vx = joy.x * PLAYER.MAX_SPEED * ts;
+        p.vy = joy.y * PLAYER.MAX_SPEED * ts;
       } else {
-        p.vx *= PLAYER.FRICTION;
-        p.vy *= PLAYER.FRICTION;
-      }
+        // Keyboard → acceleration model
+        let inputX = 0, inputY = 0;
+        if (keys["ArrowLeft"]  || keys["a"] || keys["A"]) inputX -= 1;
+        if (keys["ArrowRight"] || keys["d"] || keys["D"]) inputX += 1;
+        if (keys["ArrowUp"]    || keys["w"] || keys["W"]) inputY -= 1;
+        if (keys["ArrowDown"]  || keys["s"] || keys["S"]) inputY += 1;
 
-      // Clamp to max speed
-      const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-      if (spd > PLAYER.MAX_SPEED) {
-        p.vx = (p.vx / spd) * PLAYER.MAX_SPEED;
-        p.vy = (p.vy / spd) * PLAYER.MAX_SPEED;
+        if (inputX !== 0 && inputY !== 0) {
+          const len = Math.sqrt(2);
+          inputX /= len;
+          inputY /= len;
+        }
+
+        if (inputX !== 0 || inputY !== 0) {
+          p.vx += inputX * PLAYER.ACCEL * ts;
+          p.vy += inputY * PLAYER.ACCEL * ts;
+          // Clamp keyboard speed
+          const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+          if (spd > PLAYER.MAX_SPEED) {
+            p.vx = (p.vx / spd) * PLAYER.MAX_SPEED;
+            p.vy = (p.vy / spd) * PLAYER.MAX_SPEED;
+          }
+        } else {
+          // No input → friction
+          p.vx *= PLAYER.FRICTION;
+          p.vy *= PLAYER.FRICTION;
+          if (Math.abs(p.vx) < 0.05) p.vx = 0;
+          if (Math.abs(p.vy) < 0.05) p.vy = 0;
+        }
       }
-      if (Math.abs(p.vx) < 0.05) p.vx = 0;
-      if (Math.abs(p.vy) < 0.05) p.vy = 0;
 
       p.x = Math.max(PLAYER.WIDTH, Math.min(W - PLAYER.WIDTH, p.x + p.vx));
       p.y = Math.max(PLAYER.HEIGHT, Math.min(H - PLAYER.HEIGHT, p.y + p.vy));
@@ -279,7 +281,7 @@ export default function GameCanvas() {
       // ── Move bullets + update trails ──────────────────────────────────
       bulletsRef.current = bulletsRef.current.filter((b) => {
         b.trail.push({ x: b.x, y: b.y });
-        if (b.trail.length > DIFFICULTY.MAX_COUNT) b.trail.shift();
+        if (b.trail.length > BULLET.TRAIL_LENGTH) b.trail.shift();
 
         b.x += b.vx * ts;
         b.y += b.vy * ts;
