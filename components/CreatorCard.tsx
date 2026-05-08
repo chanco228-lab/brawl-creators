@@ -9,8 +9,19 @@ interface Props {
 }
 
 export default function CreatorCard({ creator, index }: Props) {
-  const youtubeInfo = creator.platforms.find((p) => p.name === "youtube");
   const delayClass = ["", "delay-1", "delay-2", "delay-3", "delay-4", "delay-5"][Math.min(index, 5)];
+
+  function parseCount(str: string): number {
+    if (!str) return 0;
+    const s = str.replace(/,/g, "").trim();
+    if (s.includes("万")) return parseFloat(s) * 10000;
+    if (/[kK]$/.test(s)) return parseFloat(s) * 1000;
+    return parseFloat(s) || 0;
+  }
+  const totalFollowers = creator.platforms.reduce((sum, p) => sum + parseCount(p.count), 0);
+  const totalDisplay = totalFollowers >= 10000
+    ? `${(totalFollowers / 10000).toFixed(totalFollowers % 10000 === 0 ? 0 : 1)}万`
+    : totalFollowers > 0 ? totalFollowers.toLocaleString() : null;
 
   return (
     <Link href={`/creators/${creator.id}`} className="block">
@@ -43,7 +54,7 @@ export default function CreatorCard({ creator, index }: Props) {
                 {creator.name}
               </h2>
               <p style={{ fontSize: 12, color: "#9B9BB0" }}>{creator.kana}</p>
-              {youtubeInfo && (
+              {totalDisplay && (
                 <p
                   style={{
                     fontSize: 12,
@@ -53,7 +64,7 @@ export default function CreatorCard({ creator, index }: Props) {
                     marginTop: 1,
                   }}
                 >
-                  ▶ {youtubeInfo.count} {youtubeInfo.label}
+                  総フォロワー {totalDisplay}
                 </p>
               )}
             </div>
