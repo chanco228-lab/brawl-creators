@@ -1,5 +1,5 @@
 import { creators } from "@/data/creators";
-import CreatorCard from "@/components/CreatorCard";
+import CreatorGrid from "@/components/CreatorGrid";
 
 export default function HomePage() {
   const ytCount  = creators.reduce((s, c) => s + c.platforms.filter((p) => p.name === "youtube").length, 0);
@@ -95,34 +95,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Creator Grid ── */}
-      <section className="px-4 pt-10 pb-24 max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-8">
-          <h2
-            className="section-label"
-            style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: 18, color: "#1A1A1A" }}
-          >
-            クリエイター一覧
-          </h2>
-          <span
-            className="text-sm px-3 py-0.5 rounded-full"
-            style={{
-              background: "#FFF3D6",
-              color: "#B87800",
-              fontFamily: "'Outfit', sans-serif",
-              fontWeight: 600,
-            }}
-          >
-            {creators.length} 人
-          </span>
-          <div className="flex-1 h-px" style={{ background: "#E8E8ED" }} />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {creators.map((creator, i) => (
-            <CreatorCard key={creator.id} creator={creator} index={i} />
-          ))}
-        </div>
-      </section>
+      <CreatorGrid creators={creators} />
 
       {/* ── About ── */}
       <section id="about" className="px-4 pb-24 max-w-2xl mx-auto">
