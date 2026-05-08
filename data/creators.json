@@ -41,7 +41,7 @@
     "message": "",
     "tags": [
       "最新情報",
-      "公認クリエイター"
+      "公認"
     ],
     "platforms": [
       {
@@ -104,7 +104,7 @@
     "color2": "#FF6B35",
     "message": "",
     "tags": [
-      "世界大会優勝",
+      "世界大会3回優勝",
       "Crazy Raccoon"
     ],
     "platforms": [
@@ -126,5 +126,197 @@
     "youtubeChannelId": "UCnmYa44iASA4G4J4Ots8Lng",
     "twitterHandle": "tensaibs",
     "joinedDate": "2018-08"
+  },
+  {
+    "id": "achapi",
+    "name": "あちゃぴ",
+    "kana": "Achapi",
+    "avatar": "https://yt3.googleusercontent.com/e6mk6EKeqxY0UM4NzWBORSllwP3Q_0I1EOKOKnxhd2R-ciC3dHv6nNbZJnv2KtdV2pu8hWQWYw=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "世界大会2回優勝",
+      "FENNEL"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@Achapi1",
+        "url": "https://www.youtube.com/@Achapi1",
+        "count": "100000",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@Achapi_bs",
+        "url": "https://x.com/Achapi_bs",
+        "count": "90500",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UCWeqnaP_KjIx9qcrWgeub5w",
+    "twitterHandle": "Achapi_bs",
+    "joinedDate": "2017-07"
+  },
+  {
+    "id": "yamiloticna",
+    "name": "みろか",
+    "kana": "YAmiloticNA",
+    "avatar": "https://yt3.googleusercontent.com/r_hIdk3g77-dhBJS3fq3HTqyZjgWgZm4t99bk5WAYAq6M9DYoZUz2GXAjNCyRR4Xed78Ly0FcQ=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "公認剥奪",
+      "利敵"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@YAmiloticNA",
+        "url": "https://www.youtube.com/@YAmiloticNA",
+        "count": "34000",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@ylmn_",
+        "url": "https://x.com/ylmn_",
+        "count": "13700",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UC6vfjDtpB9dNDd7IjiXQ1LQ",
+    "twitterHandle": "ylmn_",
+    "joinedDate": "2018-09"
+  },
+  {
+    "id": "chamamen",
+    "name": "ちゃま",
+    "kana": "Chamamen",
+    "avatar": "https://yt3.googleusercontent.com/8exUYdazQolONzp6C7FXB4bRsJpS7djxHIe6gw1BmeLhyXgX_GkBXLfNRy-gZDIxp5QIhmT6868=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "公認",
+      "最速トロ上げ"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@Chamamen",
+        "url": "https://www.youtube.com/@Chamamen",
+        "count": "23800",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@Chama_bs",
+        "url": "https://x.com/Chama_bs",
+        "count": "15900",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UC_1x-07uSWZGBROOqUisu2g",
+    "twitterHandle": "Chama_bs",
+    "joinedDate": "2024-10"
+  },
+  {
+    "id": "mashirann",
+    "name": "ましらん",
+    "kana": "Mashirann",
+    "avatar": "https://yt3.googleusercontent.com/YjGkf-2BmyukLCrJrLCc0xM45EAtb5Rg6H3CLjFQmCTLXICMauOikqYFv4NZEUQca73EA5tzrg=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "公認",
+      "元祖3選"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@Mashirann",
+        "url": "https://www.youtube.com/@Mashirann",
+        "count": "33900",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@Mashirann",
+        "url": "https://x.com/Mashirann",
+        "count": "514",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UCz65XomKUAjoVw9k8VyYVdQ",
+    "twitterHandle": "Mashirann",
+    "joinedDate": "2023-11"
+  },
+  {
+    "id": "brawlstarstime",
+    "name": "ブロスタの時間",
+    "kana": "brawlstars_time",
+    "avatar": "https://yt3.googleusercontent.com/R_0iljha-FdcGVjCMz9cUvjIX-AEqyAVDHR28zsaZlY8XsD-jXM6EAQe4Tvmal2MCmcil2oOFw=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "公認",
+      "3選"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@ブロスタの時間",
+        "url": "https://www.youtube.com/@ブロスタの時間",
+        "count": "39000",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@brawlstars_time",
+        "url": "https://x.com/brawlstars_time",
+        "count": "9806",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UC4QwC_5XIsKuJAB9d9DFVNw",
+    "twitterHandle": "brawlstars_time",
+    "joinedDate": "2025-06"
+  },
+  {
+    "id": "ltemisl",
+    "name": "てみ",
+    "kana": "l_temis_l",
+    "avatar": "https://yt3.googleusercontent.com/vnKkQF4ZF-eNFwZCOPFDnFoGPbQ_kzKduNei0SFy7O5knff8QNYyykqwyEg1TffloV6Jp1cn=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "公認",
+      "3選ショート"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@てみブロスタ",
+        "url": "https://www.youtube.com/@てみブロスタ",
+        "count": "21100",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@l_temis_l",
+        "url": "https://x.com/l_temis_l",
+        "count": "2988",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UCvRDcxzyIxZILtC8-v4ZoNA",
+    "twitterHandle": "l_temis_l",
+    "joinedDate": "2021-05"
   }
 ]
