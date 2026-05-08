@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { PLAYER, BULLET, DIFFICULTY, COLORS } from "./constants";
+import { PLAYER, BULLET, COLORS } from "./constants";
 import { drawField, drawPlayer, drawBullet, drawParticles, drawHUD } from "./renderer";
 import {
   BulletObj, Particle,
@@ -184,11 +184,13 @@ export default function GameCanvas() {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (manager as any).on("move", (_: unknown, data: any) => {
-        const force = Math.min(data.force, 1);
-        const angle = data.angle.radian;
+        // Guard: data.angle can be undefined when force ≈ 0, which would throw
+        if (!data.angle) return;
+        const force = Math.min(data.force ?? 0, 1);
+        // Store velocity directly (direction × speed) so the loop just assigns p.vx/vy
         joystickInputRef.current = {
-          x:  Math.cos(angle) * force,
-          y: -Math.sin(angle) * force,
+          x:  Math.cos(data.angle.radian) * force * PLAYER.MAX_SPEED,
+          y: -Math.sin(data.angle.radian) * force * PLAYER.MAX_SPEED,
         };
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -236,9 +238,9 @@ export default function GameCanvas() {
       const hasJoystick = joy.x !== 0 || joy.y !== 0;
 
       if (hasJoystick) {
-        // Joystick → direct velocity (instantly responsive, like Brawl Stars)
-        p.vx = joy.x * PLAYER.MAX_SPEED * ts;
-        p.vy = joy.y * PLAYER.MAX_SPEED * ts;
+        // Joystick → velocity already computed in handler, apply directly
+        p.vx = joy.x * ts;
+        p.vy = joy.y * ts;
       } else {
         // Keyboard → acceleration model
         let inputX = 0, inputY = 0;

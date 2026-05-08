@@ -44,8 +44,8 @@ function getSpawnPos(edge: Edge, W: number, H: number): { x: number; y: number }
 }
 
 function makeBullet(x: number, y: number, vx: number, vy: number, radius: number): BulletObj {
-  const len = Math.sqrt(vx * vx + vy * vy) || 1;
-  return { x, y, vx: (vx / len) * radius, vy: (vy / len) * radius, radius, trail: [] };
+  // vx/vy already carry correct speed from callers — do NOT re-normalize with radius
+  return { x, y, vx, vy, radius, trail: [] };
 }
 
 // ── Difficulty helpers ─────────────────────────────────────────────────────
