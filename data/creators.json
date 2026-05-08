@@ -318,5 +318,36 @@
     "youtubeChannelId": "UCvRDcxzyIxZILtC8-v4ZoNA",
     "twitterHandle": "l_temis_l",
     "joinedDate": "2021-05"
+  },
+  {
+    "id": "colthin",
+    "name": "こるてぃん",
+    "kana": "Colthin",
+    "avatar": "https://yt3.googleusercontent.com/PYORNPFMKqvKSkmvwwykxlTwpXwrWPo_vx1G_dzcJkxe0_eoqm1VjUKmEuvANCn2HsEBqjKeDXg=s160-c-k-c0x00ffffff-no-rj",
+    "color1": "#FFB921",
+    "color2": "#FF6B35",
+    "message": "",
+    "tags": [
+      "スプラウト"
+    ],
+    "platforms": [
+      {
+        "name": "youtube",
+        "handle": "@Colthin",
+        "url": "https://www.youtube.com/@Colthin",
+        "count": "393",
+        "label": "登録者"
+      },
+      {
+        "name": "twitter",
+        "handle": "@colthin_bs",
+        "url": "https://x.com/colthin_bs",
+        "count": "1557",
+        "label": "フォロワー"
+      }
+    ],
+    "youtubeChannelId": "UC9WBRztWfHPe_y4lP_ovw0w",
+    "twitterHandle": "colthin_bs",
+    "joinedDate": "2020-03"
   }
 ]

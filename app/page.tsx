@@ -1,5 +1,6 @@
 import { creators } from "@/data/creators";
 import CreatorGrid from "@/components/CreatorGrid";
+import GamePromoBanner from "@/components/GamePromoBanner";
 
 export default function HomePage() {
   const ytCount  = creators.reduce((s, c) => s + c.platforms.filter((p) => p.name === "youtube").length, 0);
@@ -97,6 +98,11 @@ export default function HomePage() {
       {/* ── Creator Grid ── */}
       <CreatorGrid creators={creators} />
 
+      {/* ── Game Promo Banner ── */}
+      <section className="px-4 pb-12 max-w-5xl mx-auto">
+        <GamePromoBanner />
+      </section>
+
       {/* ── About ── */}
       <section id="about" className="px-4 pb-24 max-w-2xl mx-auto">
         <div
@@ -118,6 +124,9 @@ export default function HomePage() {
             BRAWL CREATORSは、ブロスタ（Brawl Stars）界隈で活躍するクリエイターの情報をまとめた非公式ファンサイトです。
             各クリエイターのYouTube・X・TikTokなどのリンクや最新情報をまとめてチェックできます。
           </p>
+          <div className="mt-4 flex gap-4 justify-center text-xs" style={{ color: "#9B9BB0" }}>
+            <a href="/privacy" style={{ color: "#9B9BB0", textDecoration: "underline" }}>プライバシーポリシー</a>
+          </div>
         </div>
       </section>
 
@@ -128,6 +137,11 @@ export default function HomePage() {
       >
         <p>© 2025 BRAWL CREATORS — 非公式ファンサイト</p>
         <p className="mt-1">Brawl Stars は Supercell の登録商標です。</p>
+        <p className="mt-2">
+          <a href="/privacy" style={{ color: "#9B9BB0", textDecoration: "underline" }}>
+            プライバシーポリシー
+          </a>
+        </p>
       </footer>
     </div>
   );

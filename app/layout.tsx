@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import StarsBg from "@/components/StarsBg";
@@ -31,6 +32,15 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        {process.env.NEXT_PUBLIC_ADSENSE_ID &&
+          process.env.NEXT_PUBLIC_ADSENSE_ID !== "ca-pub-XXXXXXXXXX" && (
+            <Script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+              crossOrigin="anonymous"
+              strategy="afterInteractive"
+            />
+          )}
         <StarsBg />
         <Navbar />
         <main className="relative z-10">{children}</main>

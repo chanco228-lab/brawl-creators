@@ -36,6 +36,9 @@ export default function Navbar() {
             <Link href="/" className="btn-secondary text-sm">
               クリエイター一覧
             </Link>
+            <Link href="/game" className="btn-secondary text-sm hidden sm:inline-flex">
+              🎮 ミニゲーム
+            </Link>
             <a href="#about" className="btn-secondary text-sm hidden sm:inline-flex">
               サイトについて
             </a>
