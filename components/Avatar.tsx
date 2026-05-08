@@ -8,27 +8,24 @@ interface Props {
 
 export default function Avatar({ avatar, size, color1, color2, className = "" }: Props) {
   const isImage = avatar.startsWith("http") || avatar.startsWith("/");
+  const isEmpty = !avatar || avatar.trim() === "";
 
   const baseStyle: React.CSSProperties = {
     width: size,
     height: size,
-    borderRadius: "16px",
+    borderRadius: "12px",
     flexShrink: 0,
-    background: `linear-gradient(135deg, ${color1}40, ${color2}30)`,
-    border: "3px solid #FFB921",
-    boxShadow: "0 0 14px rgba(255,185,33,0.3), 0 4px 16px rgba(0,0,0,0.4)",
     overflow: "hidden",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    background: `linear-gradient(135deg, ${color1}20, ${color2}15)`,
+    border: "1.5px solid #E8E8ED",
   };
-
-  // 画像なし・絵文字なし → イニシャルアイコン
-  const isEmpty = !avatar || avatar.trim() === "";
 
   if (isEmpty) {
     return (
-      <div style={{ ...baseStyle, fontSize: size * 0.4, color: "#000", fontFamily: "'Lilita One', sans-serif" }} className={className}>
+      <div style={{ ...baseStyle, fontSize: size * 0.4, color: "#9B9BB0", fontFamily: "'Outfit', sans-serif", fontWeight: 700 }} className={className}>
         ?
       </div>
     );

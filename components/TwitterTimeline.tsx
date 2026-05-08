@@ -8,27 +8,25 @@ export default function TwitterTimeline({ handle }: Props) {
   return (
     <div
       style={{
-        background: "linear-gradient(180deg, #1E2A4A 0%, #16213E 100%)",
-        border: "2px solid #2A3A5A",
-        borderRadius: 16,
+        background: "#F5F5F7",
+        border: "1px dashed #E8E8ED",
+        borderRadius: 14,
         padding: "32px 24px",
         textAlign: "center",
       }}
     >
-      {/* X icon */}
       <div
         style={{
-          width: 52,
-          height: 52,
-          borderRadius: 12,
-          background: "rgba(255,255,255,0.06)",
-          border: "2px solid #2A3A5A",
+          width: 44,
+          height: 44,
+          borderRadius: 10,
+          background: "#DBEAFE",
+          color: "#2563EB",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          margin: "0 auto 16px",
-          fontSize: 22,
-          color: "#E0E0E0",
+          margin: "0 auto 12px",
+          fontSize: 18,
           fontWeight: "bold",
         }}
       >
@@ -37,15 +35,16 @@ export default function TwitterTimeline({ handle }: Props) {
 
       <p
         style={{
-          fontFamily: "'Lilita One', sans-serif",
-          color: "#FFFFFF",
-          fontSize: 16,
-          marginBottom: 6,
+          fontFamily: "'Outfit', sans-serif",
+          fontWeight: 700,
+          color: "#1A1A1A",
+          fontSize: 15,
+          marginBottom: 4,
         }}
       >
         @{handle}
       </p>
-      <p style={{ color: "#606080", fontSize: 12, marginBottom: 20 }}>
+      <p style={{ color: "#9B9BB0", fontSize: 13, marginBottom: 16 }}>
         最新の投稿はXでチェック！
       </p>
 
@@ -54,7 +53,7 @@ export default function TwitterTimeline({ handle }: Props) {
         target="_blank"
         rel="noopener noreferrer"
         className="btn-primary"
-        style={{ fontSize: 13 }}
+        style={{ fontSize: 13, padding: "9px 20px" }}
       >
         ✕ Xのページを見る
       </a>

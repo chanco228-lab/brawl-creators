@@ -34,80 +34,76 @@ export default async function CreatorPage({ params }: Props) {
   const twitterInfo = creator.platforms.find((p) => p.name === "twitter");
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
 
-      {/* ── Hero ── */}
-      <div
-        className="relative pt-16 overflow-hidden"
-        style={{
-          background: `linear-gradient(180deg, ${creator.color1}18 0%, #1A1A2E 100%)`,
-        }}
-      >
-        <div className="max-w-4xl mx-auto px-4 pt-10 pb-8">
-          <Link href="/" className="btn-secondary inline-flex gap-1.5 mb-8 text-sm">
-            ← 一覧へ戻る
-          </Link>
+      {/* ── ヘッダー空白 ── */}
+      <div className="pt-16" />
 
-          {/* プロフィールカード */}
-          <div
-            style={{
-              background: "linear-gradient(135deg, #1E2A4A 0%, #0F3460 100%)",
-              border: "2px solid #2A3A5A",
-              borderRadius: 20,
-              padding: "32px",
-              position: "relative",
-              overflow: "hidden",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
-            }}
-          >
-            {/* creator color accent line */}
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 4,
-                background: `linear-gradient(90deg, ${creator.color1}, ${creator.color2})`,
-              }}
-            />
+      <div className="max-w-4xl mx-auto px-4 pt-8 pb-4">
+        {/* 戻るボタン */}
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            fontSize: 14,
+            fontWeight: 500,
+            color: "#6B6B80",
+            padding: "8px 0",
+            transition: "color 0.2s",
+            textDecoration: "none",
+          }}
+          className="hover:text-text-primary mb-6 block"
+        >
+          ← 一覧へ戻る
+        </Link>
+      </div>
 
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mt-2">
+      {/* ── コンテンツ ── */}
+      <div className="max-w-4xl mx-auto px-4 pb-24 space-y-6">
+
+        {/* プロフィールカード */}
+        <div
+          style={{
+            background: "#FFFFFF",
+            border: "1px solid #E8E8ED",
+            borderRadius: 20,
+            overflow: "hidden",
+          }}
+        >
+          {/* top accent */}
+          <div style={{ height: 4, background: "linear-gradient(90deg, #FFB921, #FF6B35)" }} />
+
+          <div className="p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
               <Avatar
                 avatar={creator.avatar}
-                size={100}
+                size={80}
                 color1={creator.color1}
                 color2={creator.color2}
                 className="float-anim"
               />
-
               <div className="text-center sm:text-left flex-1">
-                <div className="flex flex-wrap gap-1.5 justify-center sm:justify-start mb-3">
+                <div className="flex flex-wrap gap-1.5 justify-center sm:justify-start mb-2">
                   {creator.tags.map((tag) => (
                     <span key={tag} className="tag">#{tag}</span>
                   ))}
                 </div>
-
                 <h1
-                  className="text-4xl sm:text-5xl mb-1"
                   style={{
-                    fontFamily: "'Lilita One', sans-serif",
-                    color: "#FFB921",
-                    WebkitTextStroke: "2px #000",
-                    textShadow: "2px 2px 0 #000, 0 0 10px rgba(255,185,33,0.3)",
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 800,
+                    fontSize: 28,
+                    color: "#1A1A1A",
+                    marginBottom: 2,
                   }}
                 >
                   {creator.name}
                 </h1>
-
-                <p
-                  className="text-base mb-1"
-                  style={{ fontFamily: "'Lilita One', sans-serif", color: "#606080" }}
-                >
-                  {creator.kana}
-                </p>
+                <p style={{ fontSize: 14, color: "#9B9BB0" }}>{creator.kana}</p>
                 {creator.joinedDate && (
-                  <p className="text-sm" style={{ color: "#606080" }}>
+                  <p style={{ fontSize: 13, color: "#9B9BB0", marginTop: 4 }}>
                     活動開始: {creator.joinedDate}
                   </p>
                 )}
@@ -115,41 +111,36 @@ export default async function CreatorPage({ params }: Props) {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* ── コンテンツ ── */}
-      <div className="max-w-4xl mx-auto px-4 pb-24 space-y-8">
 
         {/* メッセージ */}
-        <section>
-          <SectionLabel label="クリエイターからのメッセージ" icon="💬" iconBg="rgba(155,89,182,0.2)" iconColor="#9B59B6" lineColor="#9B59B6" />
-          <div
-            style={{
-              background: "rgba(155,89,182,0.08)",
-              borderLeft: "4px solid #9B59B6",
-              borderRadius: "0 12px 12px 0",
-              padding: "20px 24px",
-            }}
-          >
-            <p
-              className="text-base leading-relaxed italic"
-              style={{ color: "#A0A0C0" }}
+        {creator.message && (
+          <section>
+            <SectionTitle label="クリエイターからのメッセージ" />
+            <div
+              style={{
+                background: "#FFF3D6",
+                borderRadius: 12,
+                padding: "20px 24px",
+                fontSize: 15,
+                color: "#1A1A1A",
+                lineHeight: 1.8,
+              }}
             >
               &ldquo;{creator.message}&rdquo;
-            </p>
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
 
         {/* SNSリンク */}
         <section>
-          <SectionLabel label="SNS・チャンネルリンク" icon="🔗" iconBg="rgba(255,185,33,0.15)" iconColor="#FFB921" lineColor="#FFB921" />
+          <SectionTitle label="SNS・チャンネルリンク" />
           <PlatformLinks creator={creator} />
         </section>
 
         {/* YouTube */}
         {youtubeInfo && (
           <section>
-            <SectionLabel label="最新YouTube動画" icon="▶" iconBg="rgba(255,0,0,0.15)" iconColor="#FF4444" lineColor="#FF4444" />
+            <SectionTitle label="最新YouTube動画" />
             <LatestVideos
               channelId={creator.youtubeChannelId ?? ""}
               channelUrl={youtubeInfo.url}
@@ -161,10 +152,8 @@ export default async function CreatorPage({ params }: Props) {
         {/* X投稿 */}
         {twitterInfo && creator.twitterHandle && (
           <section>
-            <SectionLabel label="最新X投稿" icon="✕" iconBg="rgba(255,255,255,0.08)" iconColor="#E0E0E0" lineColor="#2A3A5A" />
-            <div className="white-card p-4">
-              <TwitterTimeline handle={creator.twitterHandle} />
-            </div>
+            <SectionTitle label="最新X投稿" />
+            <TwitterTimeline handle={creator.twitterHandle} />
           </section>
         )}
       </div>
@@ -172,37 +161,28 @@ export default async function CreatorPage({ params }: Props) {
   );
 }
 
-function SectionLabel({
-  label,
-  icon,
-  iconBg,
-  iconColor,
-  lineColor,
-}: {
-  label: string;
-  icon: string;
-  iconBg: string;
-  iconColor: string;
-  lineColor: string;
-}) {
+function SectionTitle({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3 mb-4">
-      <div
-        className="w-8 h-8 rounded-lg flex items-center justify-center text-sm flex-shrink-0"
-        style={{ background: iconBg, color: iconColor, border: `1px solid ${iconColor}30` }}
-      >
-        {icon}
-      </div>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        marginBottom: 14,
+      }}
+    >
       <h2
-        className="text-base"
-        style={{ fontFamily: "'Lilita One', sans-serif", color: "#FFFFFF" }}
+        style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontWeight: 700,
+          fontSize: 17,
+          color: "#1A1A1A",
+          whiteSpace: "nowrap",
+        }}
       >
         {label}
       </h2>
-      <div
-        className="flex-1 h-px"
-        style={{ background: `linear-gradient(90deg, ${lineColor}40, transparent)` }}
-      />
+      <div style={{ flex: 1, height: 1, background: "#E8E8ED" }} />
     </div>
   );
 }

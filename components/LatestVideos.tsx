@@ -14,39 +14,38 @@ export default async function LatestVideos({ channelId, channelUrl }: Props) {
     return (
       <div
         style={{
-          background: "linear-gradient(180deg, #1E2A4A 0%, #16213E 100%)",
-          border: "2px dashed #2A3A5A",
-          borderRadius: 16,
+          background: "#F5F5F7",
+          border: "1px dashed #E8E8ED",
+          borderRadius: 14,
           padding: "48px 24px",
           textAlign: "center",
         }}
       >
         <div
           style={{
-            width: 56,
-            height: 56,
+            width: 48,
+            height: 48,
             borderRadius: "50%",
-            background: "rgba(255,0,0,0.12)",
-            border: "2px solid rgba(255,0,0,0.2)",
+            background: "#FEE2E2",
+            color: "#DC2626",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            margin: "0 auto 16px",
-            fontSize: 22,
-            color: "#FF4444",
+            margin: "0 auto 12px",
+            fontSize: 18,
           }}
         >
           ▶
         </div>
-        <p style={{ color: "#606080", fontSize: 13, marginBottom: 12 }}>
+        <p style={{ color: "#9B9BB0", fontSize: 13, marginBottom: 12 }}>
           チャンネルIDを設定すると最新動画が表示されます
         </p>
         <a
           href={channelUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-secondary"
-          style={{ fontSize: 12 }}
+          className="btn-primary"
+          style={{ fontSize: 13, padding: "8px 18px" }}
         >
           YouTubeチャンネルへ →
         </a>
@@ -65,7 +64,7 @@ export default async function LatestVideos({ channelId, channelUrl }: Props) {
             rel="noopener noreferrer"
             className="video-card block"
           >
-            <div className="relative aspect-video" style={{ background: "#0D0D1A" }}>
+            <div className="relative aspect-video" style={{ background: "#F5F5F7" }}>
               <Image
                 src={v.thumbnail}
                 alt={v.title}
@@ -73,31 +72,30 @@ export default async function LatestVideos({ channelId, channelUrl }: Props) {
                 className="object-cover"
                 sizes="(max-width: 640px) 100vw, 33vw"
               />
-              <div className="play-overlay absolute inset-0 flex items-center justify-center bg-black/40">
+              <div className="play-overlay absolute inset-0 flex items-center justify-center bg-black/25">
                 <div
                   style={{
-                    width: 44,
-                    height: 44,
+                    width: 40,
+                    height: 40,
                     background: "#FF0000",
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    boxShadow: "0 0 20px rgba(255,0,0,0.5)",
                   }}
                 >
-                  <span style={{ color: "#fff", fontSize: 16, marginLeft: 2 }}>▶</span>
+                  <span style={{ color: "#fff", fontSize: 14, marginLeft: 2 }}>▶</span>
                 </div>
               </div>
             </div>
             <div className="p-3">
               <p
                 className="text-sm line-clamp-2 leading-snug"
-                style={{ color: "#FFFFFF", fontFamily: "'Noto Sans JP', sans-serif", fontWeight: 700 }}
+                style={{ color: "#1A1A1A", fontWeight: 500 }}
               >
                 {v.title}
               </p>
-              <p className="text-xs mt-1" style={{ color: "#606080" }}>{v.published}</p>
+              <p className="text-xs mt-1" style={{ color: "#9B9BB0" }}>{v.published}</p>
             </div>
           </a>
         ))}
@@ -108,8 +106,8 @@ export default async function LatestVideos({ channelId, channelUrl }: Props) {
           href={channelUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-secondary"
-          style={{ fontSize: 13 }}
+          className="btn-primary"
+          style={{ fontSize: 13, padding: "9px 20px" }}
         >
           ▶ YouTubeチャンネルを見る
         </a>

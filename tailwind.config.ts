@@ -9,59 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bs: {
-          "yellow-light": "#FFE35B",
-          yellow: "#FFB921",
-          red: "#F01919",
-          brown: "#C95E40",
-          blue: "#3A86FF",
-          green: "#4CAF50",
-          purple: "#9B59B6",
-          orange: "#FF6B35",
+        brand: {
+          DEFAULT: "#FFB921",
+          light:   "#FFF3D6",
+          hover:   "#F5A800",
         },
         surface: {
-          primary: "#1A1A2E",
-          card: "#16213E",
-          hover: "#0F3460",
-          elevated: "#1E2A4A",
-          border: "#2A3A5A",
-          dark: "#0D0D1A",
+          DEFAULT: "#FAFAFA",
+          card:    "#FFFFFF",
+          subtle:  "#F5F5F7",
+        },
+        "c-border": {
+          DEFAULT: "#E8E8ED",
+          hover:   "#D0D0D8",
+        },
+        "text-primary":   "#1A1A1A",
+        "text-secondary": "#6B6B80",
+        "text-muted":     "#9B9BB0",
+        accent: {
+          red:   "#FF4757",
+          blue:  "#3B82F6",
+          green: "#22C55E",
         },
       },
       fontFamily: {
-        "bs-display": ['"Fredoka One"', '"Lilita One"', "cursive"],
-        "bs-ui":      ['"Lilita One"', "sans-serif"],
-        "bs-body":    ['"Noto Sans JP"', "sans-serif"],
+        display: ['"Outfit"', "sans-serif"],
+        body:    ['"Noto Sans JP"', "sans-serif"],
       },
       borderRadius: {
-        bs:    "12px",
-        "bs-lg": "16px",
+        card: "16px",
       },
       boxShadow: {
-        "bs-btn":      "0 4px 0 #5C2D00, 0 6px 12px rgba(0,0,0,0.3)",
-        "bs-btn-hover":"0 6px 0 #5C2D00, 0 8px 16px rgba(0,0,0,0.4)",
-        "bs-card":     "inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 16px rgba(0,0,0,0.4)",
-        "bs-glow":     "0 0 20px rgba(255,185,33,0.3)",
-      },
-      animation: {
-        "bs-pop":      "bs-pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-        "bs-slide-up": "bs-slide-up 0.4s ease-out both",
-        "bs-glow":     "bs-glow-pulse 2s ease-in-out infinite",
-      },
-      keyframes: {
-        "bs-pop-in": {
-          "0%":   { transform: "scale(0.5)", opacity: "0" },
-          "70%":  { transform: "scale(1.05)" },
-          "100%": { transform: "scale(1)", opacity: "1" },
-        },
-        "bs-slide-up": {
-          from: { opacity: "0", transform: "translateY(20px)" },
-          to:   { opacity: "1", transform: "translateY(0)" },
-        },
-        "bs-glow-pulse": {
-          "0%, 100%": { boxShadow: "0 3px 0 #5C2D00, 0 0 10px rgba(255,185,33,0.2)" },
-          "50%":      { boxShadow: "0 3px 0 #5C2D00, 0 0 25px rgba(255,185,33,0.5)" },
-        },
+        card:       "0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06)",
+        "card-hover":"0 12px 40px rgba(0,0,0,0.08)",
+        btn:        "0 4px 12px rgba(255,185,33,0.3)",
       },
     },
   },

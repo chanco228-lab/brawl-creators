@@ -24,15 +24,22 @@ export default function PlatformLinks({ creator }: Props) {
             href={p.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="platform-badge flex items-center gap-3 p-3.5"
+            className="platform-badge flex items-center gap-3 p-4"
           >
             {/* アイコン */}
             <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center text-lg flex-shrink-0"
               style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
                 background: config.bg,
-                border: `1.5px solid ${config.color}40`,
                 color: config.color,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 16,
+                fontWeight: "bold",
+                flexShrink: 0,
               }}
             >
               {config.icon}
@@ -40,29 +47,38 @@ export default function PlatformLinks({ creator }: Props) {
 
             {/* ラベル + ハンドル */}
             <div className="flex-1 min-w-0">
-              <p className="text-xs" style={{ color: "#606080" }}>
+              <p style={{ fontSize: 12, color: "#9B9BB0" }}>
                 {PLATFORM_LABELS[p.name]}
               </p>
               <p
-                className="text-sm truncate"
-                style={{ color: "#FFFFFF", fontFamily: "'Lilita One', sans-serif" }}
+                style={{
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: "#1A1A1A",
+                  fontFamily: "'Noto Sans JP', sans-serif",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
               >
                 {p.handle}
               </p>
             </div>
 
             {/* カウント */}
-            <div className="text-right flex-shrink-0">
+            <div style={{ textAlign: "right", flexShrink: 0 }}>
               <p
-                className="text-xl"
                 style={{
-                  fontFamily: "'Lilita One', sans-serif",
-                  color: "#FFB921",
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 22,
+                  color: "#1A1A1A",
+                  lineHeight: 1.2,
                 }}
               >
                 {p.count}
               </p>
-              <p className="text-xs" style={{ color: "#606080" }}>{p.label}</p>
+              <p style={{ fontSize: 11, color: "#9B9BB0" }}>{p.label}</p>
             </div>
           </a>
         );
