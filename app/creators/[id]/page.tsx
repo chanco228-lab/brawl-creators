@@ -4,7 +4,6 @@ import { getCreatorById, creators } from "@/data/creators";
 import Avatar from "@/components/Avatar";
 import PlatformLinks from "@/components/PlatformLinks";
 import LatestVideos from "@/components/LatestVideos";
-import TwitterTimeline from "@/components/TwitterTimeline";
 import type { Metadata } from "next";
 
 interface Props {
@@ -31,7 +30,6 @@ export default async function CreatorPage({ params }: Props) {
   if (!creator) notFound();
 
   const youtubeInfo = creator.platforms.find((p) => p.name === "youtube");
-  const twitterInfo = creator.platforms.find((p) => p.name === "twitter");
 
   return (
     <div className="min-h-screen" style={{ background: "#FAFAFA" }}>
@@ -149,13 +147,7 @@ export default async function CreatorPage({ params }: Props) {
           </section>
         )}
 
-        {/* X投稿 */}
-        {twitterInfo && creator.twitterHandle && (
-          <section>
-            <SectionTitle label="最新X投稿" />
-            <TwitterTimeline handle={creator.twitterHandle} />
-          </section>
-        )}
+
       </div>
     </div>
   );
