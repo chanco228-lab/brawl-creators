@@ -16,6 +16,8 @@ export default function GamePage() {
         position: "fixed",
         top: 0,
         left: 0,
+        zIndex: 100,   /* cover navbar */
+        touchAction: "none",  /* prevent browser scroll/zoom intercepting touches */
       }}
     >
       <GameCanvas />

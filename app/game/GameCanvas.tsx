@@ -63,14 +63,28 @@ export default function GameCanvas() {
     setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
   }, []);
 
-  // Orientation
+  // Orientation — use screen.orientation.type when available (most reliable)
   useEffect(() => {
-    const check = () => setIsPortrait(window.innerHeight > window.innerWidth);
+    const check = () => {
+      if (screen.orientation?.type) {
+        setIsPortrait(screen.orientation.type.startsWith("portrait"));
+      } else {
+        // Fallback: legacy window.orientation or dimension comparison
+        const wo = (window as Window & { orientation?: number }).orientation;
+        if (wo !== undefined) {
+          setIsPortrait(wo === 0 || wo === 180);
+        } else {
+          setIsPortrait(window.innerHeight > window.innerWidth);
+        }
+      }
+    };
     check();
     window.addEventListener("resize", check);
+    window.addEventListener("orientationchange", check);
     screen.orientation?.addEventListener("change", check);
     return () => {
       window.removeEventListener("resize", check);
+      window.removeEventListener("orientationchange", check);
       screen.orientation?.removeEventListener("change", check);
     };
   }, []);
@@ -360,7 +374,7 @@ export default function GameCanvas() {
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "center",
         justifyContent: "center", height: "100vh", gap: 16, padding: 24,
-        background: "#FAFAFA",
+        background: "#FAFAFA", touchAction: "none",
       }}>
         <div style={{ fontSize: 52 }}>📱</div>
         <p style={{
@@ -386,14 +400,14 @@ export default function GameCanvas() {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden" }}>
+    <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden", touchAction: "none" }}>
 
       {/* Canvas — always mounted */}
-      <canvas ref={canvasRef} style={{ position: "absolute", top: 0, left: 0, display: "block" }} />
+      <canvas ref={canvasRef} style={{ position: "absolute", top: 0, left: 0, display: "block", touchAction: "none" }} />
 
-      {/* Joystick zone */}
+      {/* Joystick zone — full screen, touch-action none so nippleJS receives all events */}
       {gameState === "playing" && (
-        <div ref={joystickZoneRef} style={{ position: "absolute", inset: 0, zIndex: 10 }} />
+        <div ref={joystickZoneRef} style={{ position: "absolute", inset: 0, zIndex: 10, touchAction: "none" }} />
       )}
 
       {/* ── Title ── */}
