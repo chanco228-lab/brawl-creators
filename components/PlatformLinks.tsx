@@ -37,12 +37,10 @@ export default function PlatformLinks({ creator }: Props) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 16,
-                fontWeight: "bold",
                 flexShrink: 0,
               }}
             >
-              {config.icon}
+              {config.icon(40)}
             </div>
 
             {/* ラベル + ハンドル */}
