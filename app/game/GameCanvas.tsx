@@ -23,11 +23,25 @@ declare global {
 
 type GameState = "title" | "playing" | "gameover";
 const STORAGE_KEY = "brawl-dodge-best";
+const JOYSTICK_RADIUS = 54;
+const JOYSTICK_KNOB_RADIUS = 24;
+const JOYSTICK_DEAD_ZONE = 0.08;
+
+type JoystickVisual = {
+  active: boolean;
+  baseX: number;
+  baseY: number;
+  knobX: number;
+  knobY: number;
+};
 
 export default function GameCanvas() {
   const canvasRef      = useRef<HTMLCanvasElement>(null);
   const joystickZoneRef = useRef<HTMLDivElement>(null);
   const animationRef   = useRef<number>(0);
+  const activePointerIdRef = useRef<number | null>(null);
+  const activeTouchIdRef = useRef<number | null>(null);
+  const joystickBaseRef = useRef({ x: 0, y: 0 });
 
   // ── Game state refs (live inside rAF loop) ──────────────────────────────
   const playerRef     = useRef({ x: 0, y: 0, vx: 0, vy: 0 });
@@ -50,6 +64,13 @@ export default function GameCanvas() {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
   const [isNewBest, setIsNewBest]   = useState(false);
+  const [joystickVisual, setJoystickVisual] = useState<JoystickVisual>({
+    active: false,
+    baseX: 0,
+    baseY: 0,
+    knobX: 0,
+    knobY: 0,
+  });
   const gameOverCountRef = useRef(0);
   const startGameRef     = useRef<(() => void) | null>(null);
 
@@ -119,6 +140,9 @@ export default function GameCanvas() {
     if (!c) return;
     playerRef.current    = { x: c.width / 2, y: c.height / 2, vx: 0, vy: 0 };
     joystickInputRef.current = { x: 0, y: 0 };
+    activePointerIdRef.current = null;
+    activeTouchIdRef.current = null;
+    setJoystickVisual((current) => ({ ...current, active: false }));
     keysRef.current      = {};
     bulletsRef.current   = [];
     particlesRef.current = [];
@@ -150,6 +174,108 @@ export default function GameCanvas() {
     }
   }, []);
 
+  const updateJoystickFromPointer = useCallback((clientX: number, clientY: number) => {
+    const base = joystickBaseRef.current;
+    const dx = clientX - base.x;
+    const dy = clientY - base.y;
+    const distance = Math.hypot(dx, dy);
+    const clampedDistance = Math.min(distance, JOYSTICK_RADIUS);
+    const unitX = distance > 0 ? dx / distance : 0;
+    const unitY = distance > 0 ? dy / distance : 0;
+    const strength = clampedDistance / JOYSTICK_RADIUS;
+
+    joystickInputRef.current = strength < JOYSTICK_DEAD_ZONE
+      ? { x: 0, y: 0 }
+      : { x: unitX * strength, y: unitY * strength };
+
+    setJoystickVisual({
+      active: true,
+      baseX: base.x,
+      baseY: base.y,
+      knobX: base.x + unitX * clampedDistance,
+      knobY: base.y + unitY * clampedDistance,
+    });
+  }, []);
+
+  const resetJoystick = useCallback(() => {
+    activePointerIdRef.current = null;
+    activeTouchIdRef.current = null;
+    joystickInputRef.current = { x: 0, y: 0 };
+    setJoystickVisual((current) => ({ ...current, active: false }));
+  }, []);
+
+  const handleJoystickPointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (
+      gameStateRef.current !== "playing" ||
+      activePointerIdRef.current !== null ||
+      activeTouchIdRef.current !== null
+    ) return;
+    e.preventDefault();
+    activePointerIdRef.current = e.pointerId;
+    joystickBaseRef.current = { x: e.clientX, y: e.clientY };
+    updateJoystickFromPointer(e.clientX, e.clientY);
+    if (e.currentTarget.setPointerCapture) {
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch {
+        // Some mobile browsers report capture support but reject it mid-gesture.
+      }
+    }
+  }, [updateJoystickFromPointer]);
+
+  const handleJoystickPointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (activePointerIdRef.current !== e.pointerId) return;
+    e.preventDefault();
+    updateJoystickFromPointer(e.clientX, e.clientY);
+  }, [updateJoystickFromPointer]);
+
+  const handleJoystickPointerEnd = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (activePointerIdRef.current !== e.pointerId) return;
+    e.preventDefault();
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+    resetJoystick();
+  }, [resetJoystick]);
+
+  const handleJoystickTouchStart = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (
+      gameStateRef.current !== "playing" ||
+      activePointerIdRef.current !== null ||
+      activeTouchIdRef.current !== null
+    ) return;
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    e.preventDefault();
+    activeTouchIdRef.current = touch.identifier;
+    joystickBaseRef.current = { x: touch.clientX, y: touch.clientY };
+    updateJoystickFromPointer(touch.clientX, touch.clientY);
+  }, [updateJoystickFromPointer]);
+
+  const getActiveTouch = useCallback((touches: React.TouchList) => {
+    const touchId = activeTouchIdRef.current;
+    if (touchId === null) return null;
+    for (let i = 0; i < touches.length; i++) {
+      const touch = touches.item(i);
+      if (touch?.identifier === touchId) return touch;
+    }
+    return null;
+  }, []);
+
+  const handleJoystickTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = getActiveTouch(e.touches);
+    if (!touch) return;
+    e.preventDefault();
+    updateJoystickFromPointer(touch.clientX, touch.clientY);
+  }, [getActiveTouch, updateJoystickFromPointer]);
+
+  const handleJoystickTouchEnd = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = getActiveTouch(e.changedTouches);
+    if (!touch) return;
+    e.preventDefault();
+    resetJoystick();
+  }, [getActiveTouch, resetJoystick]);
+
   // ── Game loop ────────────────────────────────────────────────────────────
   useEffect(() => {
     if (gameState !== "playing") return;
@@ -167,36 +293,7 @@ export default function GameCanvas() {
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup",   onKeyUp);
 
-    // nippleJS
-    let joystickManager: { destroy: () => void } | null = null;
-    let nippleCleanup = false;
-
-    import("nipplejs").then((mod) => {
-      if (nippleCleanup || !joystickZoneRef.current) return;
-      const manager = mod.default.create({
-        zone: joystickZoneRef.current,
-        mode: "static",
-        position: { left: "15%", bottom: "25%" },
-        size: 120,
-        color: "rgba(255, 185, 33, 0.6)",
-        restOpacity: 0.5,
-      });
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (manager as any).on("move", (_: unknown, data: any) => {
-        // Guard: data.angle can be undefined when force ≈ 0, which would throw
-        if (!data.angle) return;
-        const force = Math.min(data.force ?? 0, 1);
-        // Store velocity directly (direction × speed) so the loop just assigns p.vx/vy
-        joystickInputRef.current = {
-          x:  Math.cos(data.angle.radian) * force * PLAYER.MAX_SPEED,
-          y: -Math.sin(data.angle.radian) * force * PLAYER.MAX_SPEED,
-        };
-      });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (manager as any).on("end", () => { joystickInputRef.current = { x: 0, y: 0 }; });
-      joystickManager = manager;
-    });
+    // Pointer joystick events are handled by the overlay below.
 
     // ── rAF loop ─────────────────────────────────────────────────────────
     const loop = (now: number) => {
@@ -238,9 +335,9 @@ export default function GameCanvas() {
       const hasJoystick = joy.x !== 0 || joy.y !== 0;
 
       if (hasJoystick) {
-        // Joystick → velocity already computed in handler, apply directly
-        p.vx = joy.x * ts;
-        p.vy = joy.y * ts;
+        // Joystick input is normalized, so map it directly to player speed.
+        p.vx = joy.x * PLAYER.MAX_SPEED * ts;
+        p.vy = joy.y * PLAYER.MAX_SPEED * ts;
       } else {
         // Keyboard → acceleration model
         let inputX = 0, inputY = 0;
@@ -364,11 +461,10 @@ export default function GameCanvas() {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
-      nippleCleanup = true;
-      joystickManager?.destroy();
+      resetJoystick();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameState, resizeCanvas]);
+  }, [gameState, resizeCanvas, resetJoystick]);
 
   // ── Portrait warning ─────────────────────────────────────────────────────
   if (isPortrait) {
@@ -400,6 +496,40 @@ export default function GameCanvas() {
     boxShadow: "0 8px 40px rgba(0,0,0,0.10)",
   };
 
+  const joystickBaseStyle: React.CSSProperties = joystickVisual.active
+    ? {
+        position: "absolute",
+        left: joystickVisual.baseX - JOYSTICK_RADIUS,
+        top: joystickVisual.baseY - JOYSTICK_RADIUS,
+        width: JOYSTICK_RADIUS * 2,
+        height: JOYSTICK_RADIUS * 2,
+      }
+    : {
+        position: "absolute",
+        left: "15%",
+        bottom: "25%",
+        transform: "translate(-50%, 50%)",
+        width: JOYSTICK_RADIUS * 2,
+        height: JOYSTICK_RADIUS * 2,
+      };
+
+  const joystickKnobStyle: React.CSSProperties = joystickVisual.active
+    ? {
+        position: "absolute",
+        left: joystickVisual.knobX - JOYSTICK_KNOB_RADIUS,
+        top: joystickVisual.knobY - JOYSTICK_KNOB_RADIUS,
+        width: JOYSTICK_KNOB_RADIUS * 2,
+        height: JOYSTICK_KNOB_RADIUS * 2,
+      }
+    : {
+        position: "absolute",
+        left: "15%",
+        bottom: "25%",
+        transform: "translate(-50%, 50%)",
+        width: JOYSTICK_KNOB_RADIUS * 2,
+        height: JOYSTICK_KNOB_RADIUS * 2,
+      };
+
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div style={{ width: "100vw", height: "100vh", position: "relative", overflow: "hidden", touchAction: "none" }}>
@@ -407,9 +537,48 @@ export default function GameCanvas() {
       {/* Canvas — always mounted */}
       <canvas ref={canvasRef} style={{ position: "absolute", top: 0, left: 0, display: "block", touchAction: "none" }} />
 
-      {/* Joystick zone — full screen, touch-action none so nippleJS receives all events */}
+      {/* Joystick zone — full screen, touch-action none so pointer events receive all input */}
       {gameState === "playing" && (
-        <div ref={joystickZoneRef} style={{ position: "absolute", inset: 0, zIndex: 10, touchAction: "none" }} />
+        <div
+          ref={joystickZoneRef}
+          onPointerDown={handleJoystickPointerDown}
+          onPointerMove={handleJoystickPointerMove}
+          onPointerUp={handleJoystickPointerEnd}
+          onPointerCancel={handleJoystickPointerEnd}
+          onLostPointerCapture={handleJoystickPointerEnd}
+          onTouchStart={handleJoystickTouchStart}
+          onTouchMove={handleJoystickTouchMove}
+          onTouchEnd={handleJoystickTouchEnd}
+          onTouchCancel={handleJoystickTouchEnd}
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 10,
+            touchAction: "none",
+            userSelect: "none",
+          }}
+        >
+          <div
+            style={{
+              ...joystickBaseStyle,
+              borderRadius: "50%",
+              background: "rgba(255, 255, 255, 0.28)",
+              border: "2px solid rgba(255, 185, 33, 0.72)",
+              boxShadow: "0 6px 24px rgba(0,0,0,0.14)",
+              pointerEvents: "none",
+            }}
+          />
+          <div
+            style={{
+              ...joystickKnobStyle,
+              borderRadius: "50%",
+              background: "rgba(255, 185, 33, 0.82)",
+              border: "2px solid rgba(229, 160, 0, 0.92)",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.18)",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
       )}
 
       {/* ── Title ── */}
