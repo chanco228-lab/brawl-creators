@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { PLAYER, BULLET, COLORS } from "./constants";
-import { drawField, drawPlayer, drawBullet, drawParticles, drawHUD } from "./renderer";
+import { drawField, drawPlayer, drawBullet, drawParticles, drawHUD, drawObstacle } from "./renderer";
 import {
-  BulletObj, Particle,
+  BulletObj, ObstacleObj, Particle,
   getSpeed, getInterval, getCount, getPattern, spawnBullets, spawnParticles,
+  generateObstacles,
 } from "./bullet-patterns";
 import AdBanner from "@/components/AdBanner";
 
@@ -52,6 +53,7 @@ export default function GameCanvas() {
   const gameStateRef  = useRef<GameState>("title");
   const bulletsRef    = useRef<BulletObj[]>([]);
   const particlesRef  = useRef<Particle[]>([]);
+  const obstaclesRef  = useRef<ObstacleObj[]>([]);
   const flashRef      = useRef<number>(0);        // alpha 0..1
   const timeScaleRef  = useRef<number>(1.0);      // slow-motion
   const hitRef        = useRef<boolean>(false);   // death in progress
@@ -146,6 +148,7 @@ export default function GameCanvas() {
     keysRef.current      = {};
     bulletsRef.current   = [];
     particlesRef.current = [];
+    obstaclesRef.current = generateObstacles(c.width, c.height);
     flashRef.current     = 0;
     timeScaleRef.current = 1.0;
     hitRef.current       = false;
@@ -373,6 +376,26 @@ export default function GameCanvas() {
       p.x = Math.max(PLAYER.WIDTH, Math.min(W - PLAYER.WIDTH, p.x + p.vx));
       p.y = Math.max(PLAYER.HEIGHT, Math.min(H - PLAYER.HEIGHT, p.y + p.vy));
 
+      // ── Obstacle collision (push player out of AABB) ──────────────────
+      for (const o of obstaclesRef.current) {
+        const nearX = Math.max(o.x, Math.min(p.x, o.x + o.w));
+        const nearY = Math.max(o.y, Math.min(p.y, o.y + o.h));
+        const dx = p.x - nearX;
+        const dy = p.y - nearY;
+        const dist = Math.hypot(dx, dy);
+        if (dist < PLAYER.HITBOX_RADIUS && dist > 0) {
+          const overlap = PLAYER.HITBOX_RADIUS - dist;
+          p.x += (dx / dist) * overlap;
+          p.y += (dy / dist) * overlap;
+          // Zero out velocity component toward obstacle
+          const dot = p.vx * (dx / dist) + p.vy * (dy / dist);
+          if (dot < 0) {
+            p.vx -= dot * (dx / dist);
+            p.vy -= dot * (dy / dist);
+          }
+        }
+      }
+
       // ── Bullet spawning ───────────────────────────────────────────────
       if (!hitRef.current) {
         const interval = getInterval(elapsed);
@@ -432,6 +455,9 @@ export default function GameCanvas() {
 
       // ── Render ────────────────────────────────────────────────────────
       drawField(ctx, W, H);
+
+      // Obstacles (behind bullets and player)
+      for (const o of obstaclesRef.current) drawObstacle(ctx, o);
 
       // Bullets
       for (const b of bulletsRef.current) drawBullet(ctx, b);

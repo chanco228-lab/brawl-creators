@@ -1,5 +1,5 @@
 import { PLAYER, BULLET, FIELD, COLORS } from "./constants";
-import type { BulletObj, Particle } from "./bullet-patterns";
+import type { BulletObj, ObstacleObj, Particle } from "./bullet-patterns";
 
 // ── Field ──────────────────────────────────────────────────────────────────
 
@@ -40,6 +40,38 @@ export function drawField(ctx: CanvasRenderingContext2D, W: number, H: number) {
   ctx.strokeStyle = FIELD.BORDER;
   ctx.lineWidth = 2;
   ctx.strokeRect(1, 1, W - 2, H - 2);
+}
+
+// ── Obstacle ───────────────────────────────────────────────────────────────
+
+export function drawObstacle(ctx: CanvasRenderingContext2D, o: ObstacleObj) {
+  const { x, y, w, h } = o;
+  const depth = 10; // isometric "height"
+
+  // Side face (darker)
+  ctx.fillStyle = "rgba(90,70,50,0.85)";
+  ctx.beginPath();
+  ctx.moveTo(x, y + h);
+  ctx.lineTo(x + w, y + h);
+  ctx.lineTo(x + w, y + h + depth);
+  ctx.lineTo(x, y + h + depth);
+  ctx.closePath();
+  ctx.fill();
+
+  // Top face
+  ctx.fillStyle = "rgba(160,130,90,0.90)";
+  ctx.strokeStyle = "rgba(100,80,50,0.5)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, 4);
+  ctx.fill();
+  ctx.stroke();
+
+  // Highlight strip
+  ctx.fillStyle = "rgba(255,255,255,0.15)";
+  ctx.beginPath();
+  ctx.roundRect(x + 4, y + 4, w - 8, 6, 2);
+  ctx.fill();
 }
 
 // ── Player ─────────────────────────────────────────────────────────────────

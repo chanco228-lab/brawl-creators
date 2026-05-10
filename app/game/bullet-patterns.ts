@@ -1,5 +1,45 @@
 import { BULLET } from "./constants";
 
+export interface ObstacleObj {
+  x: number; // left edge
+  y: number; // top edge
+  w: number;
+  h: number;
+}
+
+export function generateObstacles(W: number, H: number): ObstacleObj[] {
+  const obstacles: ObstacleObj[] = [];
+  const cx = W / 2, cy = H / 2;
+  const clearR = 130; // keep center free for player spawn
+  let attempts = 0;
+  const target = 4 + Math.floor(Math.random() * 2); // 4-5
+
+  while (obstacles.length < target && attempts < 300) {
+    attempts++;
+    const ow = 44 + Math.floor(Math.random() * 52); // 44-96px
+    const oh = 28 + Math.floor(Math.random() * 32); // 28-60px
+    const margin = 36;
+    const ox = margin + Math.random() * (W - ow - margin * 2);
+    const oy = margin + Math.random() * (H - oh - margin * 2);
+
+    // Don't overlap center safe zone
+    const closestX = Math.max(ox, Math.min(cx, ox + ow));
+    const closestY = Math.max(oy, Math.min(cy, oy + oh));
+    if (Math.hypot(closestX - cx, closestY - cy) < clearR) continue;
+
+    // Don't overlap existing obstacles (with padding)
+    const pad = 20;
+    const overlaps = obstacles.some(
+      (o) => ox < o.x + o.w + pad && ox + ow > o.x - pad &&
+              oy < o.y + o.h + pad && oy + oh > o.y - pad,
+    );
+    if (overlaps) continue;
+
+    obstacles.push({ x: ox, y: oy, w: ow, h: oh });
+  }
+  return obstacles;
+}
+
 export interface BulletObj {
   x: number;
   y: number;
@@ -18,12 +58,23 @@ export interface Particle {
   radius: number;
 }
 
-// ── Edge selection (weighted) ──────────────────────────────────────────────
+// ── Edge selection (weighted, adaptive) ────────────────────────────────────
 
 type Edge = "top" | "left" | "right" | "bottom" | "top-left" | "top-right";
 
-function getSpawnEdge(): Edge {
+function getSpawnEdge(px?: number, py?: number, W?: number, H?: number): Edge {
   const r = Math.random();
+  // When player is in the lower 40% of the field, bias spawns toward bottom/sides
+  if (px !== undefined && py !== undefined && W !== undefined && H !== undefined
+      && py > H * 0.6) {
+    if (r < 0.30) return "top";
+    if (r < 0.50) return "left";
+    if (r < 0.70) return "right";
+    if (r < 0.90) return "bottom";
+    if (r < 0.95) return "top-left";
+    return "top-right";
+  }
+  // Default weights (top-heavy)
   if (r < 0.45) return "top";
   if (r < 0.60) return "left";
   if (r < 0.75) return "right";
@@ -105,7 +156,7 @@ export function getPattern(elapsed: number): PatternName {
 // ── Patterns ──────────────────────────────────────────────────────────────
 
 export function spawnAim(W: number, H: number, speed: number, px: number, py: number): BulletObj[] {
-  const edge = getSpawnEdge();
+  const edge = getSpawnEdge(px, py, W, H);
   const { x, y } = getSpawnPos(edge, W, H);
   const baseAngle = Math.atan2(py - y, px - x);
   const spread = (Math.random() - 0.5) * 0.52; // ±~15 degrees
@@ -115,7 +166,8 @@ export function spawnAim(W: number, H: number, speed: number, px: number, py: nu
 }
 
 export function spawnSpread(W: number, H: number, speed: number, px: number, py: number): BulletObj[] {
-  const { x, y } = getSpawnPos("top", W, H);
+  const edge = py > H * 0.6 ? getSpawnEdge(px, py, W, H) : "top";
+  const { x, y } = getSpawnPos(edge, W, H);
   const baseAngle = Math.atan2(py - y, px - x);
   const count = 3 + Math.floor(Math.random() * 3); // 3-5
   const spreadAngle = 0.4;
