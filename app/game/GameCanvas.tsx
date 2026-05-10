@@ -136,8 +136,21 @@ export default function GameCanvas() {
     drawField(ctx, c.width, c.height);
   }, [gameState]);
 
+  // ── Fullscreen ───────────────────────────────────────────────────────────
+  const requestFullscreen = useCallback(() => {
+    const el = document.documentElement as HTMLElement & {
+      webkitRequestFullscreen?: () => Promise<void>;
+    };
+    if (el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    }
+  }, []);
+
   // ── Start game ───────────────────────────────────────────────────────────
   const startGame = useCallback(() => {
+    requestFullscreen();
     const c = canvasRef.current;
     if (!c) return;
     playerRef.current    = { x: c.width / 2, y: c.height / 2, vx: 0, vy: 0 };
@@ -155,7 +168,7 @@ export default function GameCanvas() {
     startTimeRef.current = performance.now();
     lastSpawnRef.current = performance.now();
     setGameState("playing");
-  }, []);
+  }, [requestFullscreen]);
 
   useEffect(() => { startGameRef.current = startGame; }, [startGame]);
 
