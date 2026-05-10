@@ -12,7 +12,7 @@ export function generateObstacles(W: number, H: number): ObstacleObj[] {
   const cx = W / 2, cy = H / 2;
   const clearR = 130; // keep center free for player spawn
   let attempts = 0;
-  const target = 4 + Math.floor(Math.random() * 2); // 4-5
+  const target = 8 + Math.floor(Math.random() * 3); // 8-10
 
   while (obstacles.length < target && attempts < 300) {
     attempts++;
